@@ -1,12 +1,16 @@
 {
-  "name": "adonis-fullstack-app",
-  "version": "4.1.0",
+  "name": "adonisjs-api-oauth2-server",
+  "version": "1.0.0",
   "adonis-version": "4.1.0",
-  "description": "The fullstack application boilerplate for Adonisjs",
+  "description": "Adonisjs api template with oauth2 server ",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "assets-dev": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "assets-watch": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "assets-hot": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "assets-production": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "keywords": [
     "adonisjs",
@@ -14,6 +18,10 @@
   ],
   "author": "",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThaiWS/adonisjs-api-oauth2-server.git"
+  },
   "private": true,
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",
@@ -27,9 +35,15 @@
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
-    "mysql": "^2.17.1"
+    "mysql": "^2.17.1",
+    "browser-cookies": "^1.2.0",
+    "laravel-mix": "^4.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.7",
+    "vue-template-compiler": "^2.6.10"
+  },
   "autoload": {
     "App": "./app"
   }

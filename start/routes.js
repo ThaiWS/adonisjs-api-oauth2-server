@@ -17,7 +17,7 @@
 const Route = use('Route')
 
 // Route.on('/').render('index')
-Route.get('/', 'SiteController.home');
+Route.get('/', 'SiteController.home').middleware('auth');
 
 Route.on('/signup').render('auth.signup');
 Route.post('/signup', 'UserController.create').validator('CreateUser');
@@ -29,3 +29,11 @@ Route.get('/logout', async ({ auth, response }) => {
     await auth.logout();
     return response.redirect('/');
 });
+
+Route.group(() => {
+    Route.get('users', 'UserController.index')
+    Route.post('users', 'UserController.create').validator('CreateUser');
+}).prefix("api/v1");
+
+// This has to be the last route
+// Route.any('*', ({view}) =>  view.render('app')).middleware('auth')
