@@ -1,1 +1,1 @@
-# Adonisjs API app with oauth 2.0 blueprint 
+# Adonisjs API app with oauth2 server blueprint 
