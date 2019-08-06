@@ -1,0 +1,30 @@
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: uint
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - username
+      - email
+      - password
+  
+  NewUser:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - username
+      - email
+      - password

@@ -14,11 +14,13 @@
 </head>
 <body>
     <header>
-        <a href="/" id="logo">Home</a>
+        <a href="/" id="logo">AdonisJs</a>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
                 @loggedIn             
+                    <li><a href="/users">Users</a></li>
+                    <li><a href="/docs">APIs</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login</a></li>

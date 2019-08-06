@@ -6,4 +6,7 @@
 - Vue.js and Bootstrap v4 based [bootstrap-vue](https://github.com/bootstrap-vue/bootstrap-vue)
 - Nice UI from [Core UI](https://coreui.io/)
 - i18n component from [vue-i18n](https://github.com/kazupon/vue-i18n/)
-- Swagger Ui [Swagger](https://swagger.io/)
+- Swagger Ui [Swagger](https://swagger.io/) 
+
+# Credits
+- Swagger provider for Adonis 4.x [adonis-swagger](https://github.com/ahmadarif/adonis-swagger) 

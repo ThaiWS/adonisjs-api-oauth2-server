@@ -3,16 +3,21 @@
 const User = use('App/Models/User');
 
 class UserController {
-    
-    async create({ request, response, auth}) {
-        const user = await User.create(request.only(['username','email','password']));
 
-        await auth.login(user);
-        return response.redirect('/');
+    async index({ request, response, auth, view }) {
+
+        const format = request.header('accept', '')
+        const users = await User.all()
+
+        if (format === 'application/json') {
+            return users
+        } else {
+            return view.render('users.list', { users: users.toJSON() })
+        }
     }
-    
-    async create({ request, response, auth}) {
-        const user = await User.create(request.only(['username','email','password']));
+
+    async create({ request, response, auth }) {
+        const user = await User.create(request.only(['username', 'email', 'password']));
 
         await auth.login(user);
         return response.redirect('/');
@@ -25,7 +30,7 @@ class UserController {
             await auth.attempt(email, password);
             return response.redirect('/');
         } catch (error) {
-            session.flash({loginError: 'These credentials do not work.'})
+            session.flash({ loginError: 'These credentials do not work.' })
             return response.redirect('/login');
         }
     }

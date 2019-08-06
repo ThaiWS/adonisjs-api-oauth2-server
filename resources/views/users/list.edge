@@ -1,0 +1,19 @@
+@layout('layouts.main')
+
+@section('title')
+All Users
+@endsection
+
+@section('content')
+  <h1>All Users</h1>
+
+  @each(user in users)
+  <div class="user-container">
+    <div class="blank"></div>
+    <div class="user-info">
+      <h3>{{ user.username }}</h3>
+    </div>
+  </div>
+  @endeach
+  
+@endsection
