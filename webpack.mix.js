@@ -6,6 +6,8 @@ mix.version()
 mix.setPublicPath('public')
 // transpiling, babelling, minifying and creating the public/js/main.js out of our assets
     .js('resources/assets/js/main.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .copyDirectory('resources/assets/images', 'public/images')
 
 
 

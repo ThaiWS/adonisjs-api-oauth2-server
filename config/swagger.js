@@ -30,8 +30,8 @@ module.exports = {
 
         // OAuth2 configuration
         OAuth2: {
-          authorizationUrl: 'https://example.com/oauth/authorize',
-          tokenUrl: 'https://example.com/oauth/token',
+          authorizationUrl: '/api/v1/oauth2/authorize',
+          tokenUrl: '/api/v1/oauth2/token',
 
           // define your scopes here
           // remove read, write and admin if not necessary

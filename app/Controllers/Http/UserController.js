@@ -16,6 +16,18 @@ class UserController {
         }
     }
 
+    async info ({ request, response, auth, view }) {
+
+        const format = request.header('accept', '')
+        const user = auth.user;
+        console.log(user);
+        if (format === 'application/json') {
+            return user
+        } else {
+            return view.render('users.view', { user: user.toJSON() })
+        }
+      }
+
     async create({ request, response, auth }) {
         const user = await User.create(request.only(['username', 'email', 'password']));
 

@@ -4,34 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{ style('style') }}
-
     @!section('extracss')
-
     <title>
         @!section('title')
     </title>
+    {{ style (versioncss('app')) }}
 </head>
 <body>
-    <header>
-        <a href="/" id="logo">AdonisJs</a>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                @loggedIn             
-                    <li><a href="/users">Users</a></li>
-                    <li><a href="/docs">APIs</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                @else
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/signup">Signup</a></li>
-                @endloggedIn
-            </ul>
-        </nav>
-    </header>
-
-    <div class="container">
-        @!section('content')
-    </div>
+        <div class="container">
+                @!section('content')
+            </div>
+    <div id="app"></div>
+    {{ script(versionjs('main')) }}
 </body>
 </html>

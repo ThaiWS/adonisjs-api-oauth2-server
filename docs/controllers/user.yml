@@ -25,3 +25,13 @@
         description: users
         schema: 
           $ref: '#/definitions/User'
+/me:
+  get:
+    description: Current User Profile
+    produces:
+      - application/json
+    responses:
+      200:
+        description: users
+        schema: 
+          $ref: '#/definitions/User'
