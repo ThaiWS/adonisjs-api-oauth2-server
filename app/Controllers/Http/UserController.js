@@ -35,15 +35,34 @@ class UserController {
         return response.redirect('/');
     }
 
-    async login({ request, auth, response, session }) {
-        const { email, password } = request.all();
+    // async login({ request, auth, response, session }) {
+    //     const { email, password } = request.all();
 
+    //     try {
+    //         await auth.attempt(email, password);
+    //         return response.redirect('/');
+    //     } catch (error) {
+    //         session.flash({ loginError: 'These credentials do not work.' })
+    //         return response.redirect('/login');
+    //     }
+    // }
+
+    async login ({ request, auth, response }) {
         try {
-            await auth.attempt(email, password);
-            return response.redirect('/');
+            const { email, password } = request.all();
+            console.log(email);
+            // validate the user credentials and generate a JWT token
+            const token = await auth.attempt(email, password);
+    
+            return response.json({
+                status: 'success',
+                data: token
+            })
         } catch (error) {
-            session.flash({ loginError: 'These credentials do not work.' })
-            return response.redirect('/login');
+            response.status(400).json({
+                status: 'error',
+                message: 'Invalid email/password'
+            })
         }
     }
 }

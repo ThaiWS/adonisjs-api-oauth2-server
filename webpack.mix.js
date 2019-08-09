@@ -3,11 +3,13 @@ let mix = require('laravel-mix');
 mix.version()
 
 // setting the public directory to public (this is where the mix-manifest.json gets created)
-mix.setPublicPath('public')
+mix.setPublicPath('public');
+
 // transpiling, babelling, minifying and creating the public/js/main.js out of our assets
-    .js('resources/assets/js/main.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
-    .copyDirectory('resources/assets/images', 'public/images')
+mix.js('resources/assets/js/main.js', 'public/js');
+mix.sass('resources/assets/sass/app.scss', 'public/css');
+mix.sass('resources/assets/sass/login.scss', 'public/css');
+mix.copyDirectory('resources/assets/images', 'public/images');
 
 
 

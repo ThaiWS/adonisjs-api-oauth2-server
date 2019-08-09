@@ -7,7 +7,7 @@
             :type="notification.type"
             v-if="notification.message"
           />
-      <b-form @submit.prevent="login" @reset="onReset" v-if="show" class="form-signin">
+      <b-form @submit.prevent="user.login" @reset="onReset" v-if="show" class="form-signin">
       <b-form-group
         id="input-group-1"
         label="Email address:"
@@ -65,10 +65,8 @@
 </template>
 
 <script>
-import cookies from 'browser-cookies';
-
 export default {
-  name: "Login",
+  name: "Signup",
   components: {
             Notification
         },
@@ -86,44 +84,29 @@ export default {
     };
   },
   methods: {
-    async login () {
+    login () {
+                axios
+                    .post('/user/login', {
+                        email: this.email,
+                        password: this.password,
+                        password: this.password,
+                    })
+                    .then(response => {
+                        // save token in localstorage
+                        //localStorage.setItem('tweetr-token', response.data.data.token)
 
-      const csrf = cookies.get('XSRF-TOKEN')
-      const response = await fetch('/login', {
-          method: 'post',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'x-xsrf-token': csrf,
-          },
-      });
-
-      const body = await response.json()
-
-      console.log(body)
-
-                // axios
-                //     .post('/user/login', {
-                //         email: this.email,
-                //         password: this.password,
-                //         password: this.password,
-                //     })
-                //     .then(response => {
-                //         // save token in localstorage
-                //         //localStorage.setItem('tweetr-token', response.data.data.token)
-
-                //         // redirect to user home
-                //         this.$router.push('/')
-                //     })
-                //     .catch(error => {
-                //         // clear form inputs
-                //         this.email = this.password = ''
-                //         // display error notification
-                //         this.notification = Object.assign({}, this.notification, {
-                //             message: error.response.data.message,
-                //             type: error.response.data.status
-                //         })
-                //     })
+                        // redirect to user home
+                        this.$router.push('/')
+                    })
+                    .catch(error => {
+                        // clear form inputs
+                        this.email = this.password = ''
+                        // display error notification
+                        this.notification = Object.assign({}, this.notification, {
+                            message: error.response.data.message,
+                            type: error.response.data.status
+                        })
+                    })
             },
       
       onSubmit(evt) {
