@@ -1,22 +1,34 @@
 <template>
   <div class="text-center">
       <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <Notification
-            :message="notification.message"
-            :type="notification.type"
-            v-if="notification.message"
-          />
-      <b-form @submit.prevent="user.login" @reset="onReset" v-if="show" class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal">Join now</h1>
+
+      <b-form @submit.prevent="signup" @reset="onReset" v-if="show" class="form-signup">
       <b-form-group
         id="input-group-1"
-        label="Email address:"
+        label="username:"
         label-for="input-1"
         label-class="sr-only"
         description=""
       >
         <b-form-input
           id="input-1"
+          v-model="username"
+          type="text"
+          required
+          placeholder="Enter username"
+        ></b-form-input>
+      </b-form-group>
+
+       <b-form-group
+        id="input-group-2"
+        label="email:"
+        label-for="input-2"
+        label-class="sr-only"
+        description=""
+      >
+        <b-form-input
+          id="input-2"
           v-model="email"
           type="email"
           required
@@ -26,13 +38,13 @@
 
        <b-form-group
         id="input-group-2"
-        label="Password:"
-        label-for="input-2"
+        label="password:"
+        label-for="input-3"
         label-class="sr-only"
         description=""
       >
         <b-form-input
-          id="input-2"
+          id="input-3"
           v-model="password"
           type="password"
           required
@@ -40,55 +52,33 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-3">
-        <b-form-checkbox-group v-model="remember" id="checkboxes-4">
-          <b-form-checkbox value="true">Remember me</b-form-checkbox>     
-        </b-form-checkbox-group>
-      </b-form-group>
 
       <b-button type="submit" variant="primary" class="btn btn-lg btn-primary btn-block">Sign in</b-button>
       </b-form>
       
-      <div class="ui divider"></div>
-
-      <div class="ui column grid">
-        <div class="center aligned column">
-          <p>
-            Don't have an account? <router-link to="/signup">Sign Up</router-link>
-          </p>
-        </div>
-      </div>
-
       <p class="mt-5 mb-3 text-muted" v-if="new Date().getFullYear() > 2019">&copy; 2019-{{ new Date().getFullYear() }}</p>
       <p class="mt-5 mb-3 text-muted" v-else>&copy; 2019</p>
   </div>
 </template>
 
 <script>
+const axios = require('axios');
 export default {
   name: "Signup",
-  components: {
-            Notification
-        },
   data() {
-    return {
-     
+    return {     
+          username: '',
           email: '',
-          password: '',      
-          remember: false,
-          notification: {
-                    message: '',
-                    type: ''
-                },
-        show: true
+          password: '',     
+          show: true
     };
   },
   methods: {
-    login () {
+    signup () {
                 axios
-                    .post('/user/login', {
+                    .post('/signup', {
                         email: this.email,
-                        password: this.password,
+                        username: this.username,
                         password: this.password,
                     })
                     .then(response => {
@@ -100,12 +90,14 @@ export default {
                     })
                     .catch(error => {
                         // clear form inputs
-                        this.email = this.password = ''
+                        this.email = this.password = this.username = ''
                         // display error notification
-                        this.notification = Object.assign({}, this.notification, {
-                            message: error.response.data.message,
-                            type: error.response.data.status
-                        })
+                        this.$notify({
+                          group: 'app',
+                          type: 'error',
+                          title: error.response.data.status.toUpperCase(),
+                          text: error.response.data.message
+                        });
                     })
             },
       
@@ -118,7 +110,7 @@ export default {
         // Reset our form values
         this.form.email = ''
         this.form.password = ''
-        this.form.checked = []
+        this.form.username = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {

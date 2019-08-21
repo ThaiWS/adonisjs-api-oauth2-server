@@ -3,12 +3,17 @@ import router from './router'
 import App from '@/components/layout/App'
 
 import BootstrapVue from 'bootstrap-vue'
+import Notifications from 'vue-notification'
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
+Vue.use(Notifications)
+// import VueNotify from 'vue-notifyjs'
+// import 'vue-notifyjs/themes/default.css'
+// Vue.use(VueNotify)
 
 
 new Vue({

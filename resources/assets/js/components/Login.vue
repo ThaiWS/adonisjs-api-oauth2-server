@@ -2,12 +2,11 @@
   <div class="text-center">
       <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <Notification
-            :message="notification.message"
-            :type="notification.type"
-            v-if="notification.message"
-          />
+
       <b-form @submit.prevent="login" @reset="onReset" v-if="show" class="form-signin">
+
+      <!-- <input type="hidden" name="_csrf" value="{{ csrfToken }}" v-model="_csrf"> -->
+
       <b-form-group
         id="input-group-1"
         label="Email address:"
@@ -66,6 +65,7 @@
 
 <script>
 import cookies from 'browser-cookies';
+const axios = require('axios');
 
 export default {
   name: "Login",
@@ -87,55 +87,92 @@ export default {
   },
   methods: {
     async login () {
-
+      console.log("login");
       const csrf = cookies.get('XSRF-TOKEN')
-      const response = await fetch('/login', {
-          method: 'post',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'x-xsrf-token': csrf,
-          },
-      });
 
-      const body = await response.json()
+      // axios.post(
+      //   '/login', 
+      // {
+      //   email: this.email,
+      //   password: this.password,
+      //   remember: this.remember,
+      //   // _csrf : csrf
+      // },
+      // // {
+      // //   headers: {
+      // //   'Accept': 'application/json',
+      // //   'Content-Type': 'application/json',
+      // //   // 'x-xsrf-token': csrf,
+      // // }
+      // // }
+      // )
+      // .then((res) => {
+      //   console.log(`statusCode: ${res.statusCode}`)
+      //   console.log(res)
+      // })
+      // .catch((error) => {
+      //   console.error(error)
+      // });
 
-      console.log(body)
+      // const response = await fetch('/login', {
+      //     method: 'post',
+      //     headers: {
+      //         'Accept': 'application/json',
+      //         'Content-Type': 'application/json',
+      //         'x-xsrf-token': csrf,
+      //     },
+      // });
 
-                // axios
-                //     .post('/user/login', {
-                //         email: this.email,
-                //         password: this.password,
-                //         password: this.password,
-                //     })
-                //     .then(response => {
-                //         // save token in localstorage
-                //         //localStorage.setItem('tweetr-token', response.data.data.token)
+      // const body = await response.json()
 
-                //         // redirect to user home
-                //         this.$router.push('/')
-                //     })
-                //     .catch(error => {
-                //         // clear form inputs
-                //         this.email = this.password = ''
-                //         // display error notification
-                //         this.notification = Object.assign({}, this.notification, {
-                //             message: error.response.data.message,
-                //             type: error.response.data.status
-                //         })
-                //     })
+      //console.log(body)
+
+                axios
+                    .post('/login', {
+                        email: this.email,
+                        password: this.password,
+                        remember: this.remember,
+                    })
+                    .then(response => {
+                      console.log(response);
+                        // save token in localstorage
+                        //localStorage.setItem('tweetr-token', response.data.data.token)
+
+                        // redirect to user home
+                        this.$router.push('/')
+                    })
+                    .catch(error => {
+
+                        console.log(error.response);
+                        // clear form inputs
+                        this.email = this.password = this.remember = ''
+                        // display error notification
+                        // this.notification = Object.assign({}, this.notification, {
+                        //     message: error.response.data.message,
+                        //     type: error.response.data.status
+                        // })
+
+                        this.$notify({
+                          group: 'app',
+                          type: 'error',
+                          title: error.response.data.status.toUpperCase(),
+                          text: error.response.data.message
+                        });
+                    })
             },
       
       onSubmit(evt) {
+        console.log("onSubmit");
         evt.preventDefault()
         alert(JSON.stringify(this.form))
       },
       onReset(evt) {
+        console.log("onReset");
         evt.preventDefault()
         // Reset our form values
         this.form.email = ''
         this.form.password = ''
-        this.form.checked = []
+        this.form.remember = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {

@@ -49,8 +49,8 @@ class UserController {
 
     async login ({ request, auth, response }) {
         try {
-            const { email, password } = request.all();
-            console.log(email);
+            const { email, password, remember } = request.all();
+          
             // validate the user credentials and generate a JWT token
             const token = await auth.attempt(email, password);
     
