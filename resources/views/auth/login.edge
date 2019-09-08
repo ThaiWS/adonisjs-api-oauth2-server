@@ -1,12 +1,27 @@
-@layout('layouts.main')
-
-@section('extracss')
-{{ style (versioncss('login')) }}
-@endsection
-
-@section('title')
-Login
-@endsection
+@layout('layout.login')
 
 @section('content')
+@set('title', 'Login')
+
+<form class="form-signin bg-white shadow-md rounded"  action="/login" method="POST">
+    {{ csrfField() }}
+    @if(flashMessage('error'))
+        @component('components.alert', { color: 'danger' })
+            <p class="text-sm">{{ flashMessage('error') }}</p>
+        @endcomponent
+  @endif
+        <img class="mb-4" src="//getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+          <label>
+            <input name="rememberMe" type="checkbox" value="true"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+      </form>
 @endsection

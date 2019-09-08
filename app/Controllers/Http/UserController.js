@@ -47,23 +47,24 @@ class UserController {
     //     }
     // }
 
-    async login ({ request, auth, response }) {
+    async login ({ request, auth, response , session}) {
         try {
-            const { email, password, remember } = request.all();
-          
+            const { email, password, rememberMe } = request.all();
+   
             // validate the user credentials and generate a JWT token
-            const token = await auth.attempt(email, password);
+            await auth.attempt(email, password);
     
-            return response.json({
-                status: 'success',
-                data: token
-            })
         } catch (error) {
-            response.status(400).json({
-                status: 'error',
-                message: 'Invalid email/password'
-            })
+    
+            session.flashExcept(['password'])
+            session.flash({ error: 'We cannot find any account with these credentials.' })
+           return response.redirect('login')
         }
+
+        /**
+         * We are authenticated.
+         */
+        return response.redirect('/')
     }
 }
 

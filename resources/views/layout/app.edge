@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">    
-    <title>
-        @!section('title')
-    </title>    
-    @!section('extracss')
+    <title>{{ title }} | Adonis</title>
+    {{ style (versioncss('app')) }}
 </head>
 <body>
-    <div id="app"></div>
-    {{ script(versionjs('main')) }}
+    @include('layout.partials.header')
+    @!section('content')
+    @include('layout.partials.footer')
+    {{ script (versionjs('app')) }}
 </body>
 </html>

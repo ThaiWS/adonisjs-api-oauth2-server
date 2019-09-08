@@ -1,11 +1,7 @@
-@layout('layouts.main')
-
-@section('title')
-Hello Adonis
-@endsection
+@layout('layout.app')
 
 @section('content')
-
+@set('title', 'Home')
 
   <div class="logo"></div>
   <div class="title">Hello {{ user.username }}</div>

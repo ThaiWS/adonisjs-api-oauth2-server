@@ -26,7 +26,6 @@ Route.group(() => {
 }).middleware('guest');
 
 Route.group(() => {
-   
     Route.get('/', 'SiteController.home')
     Route.get('/users', 'UserController.index')
     Route.get('/info', 'UserController.info')

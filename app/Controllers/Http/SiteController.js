@@ -11,7 +11,7 @@ class SiteController {
         //     return view.render('users.view', { user: user.toJSON() })
         // }
 
-        return view.render('site.index', { user: user.toJSON() })
+        return view.render('site.home', { user: user.toJSON() })
     }
 }
 
